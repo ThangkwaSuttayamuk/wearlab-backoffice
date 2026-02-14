@@ -1,0 +1,9 @@
+.filterButton-layout {
+  position: relative;
+}
+
+.filterButton-icon-layout {
+  height: 30px;
+  width: 30px;
+  cursor: pointer;
+}

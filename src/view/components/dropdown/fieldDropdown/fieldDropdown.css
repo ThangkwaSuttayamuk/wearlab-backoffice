@@ -1,0 +1,114 @@
+.fieldDropdown-group-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.fieldDropdown-text {
+  font-size: 14px;
+  color: #727272;
+}
+
+.fieldDropdown-group-wrapper {
+  position: relative;
+  height: 30px;
+}
+
+.fieldDropdown-layout {
+  border: 1px solid rgb(174, 174, 174);
+  outline: none;
+  padding-left: 10px;
+  padding-right: 35px;
+  font-size: 14px;
+  width: 200px;
+  height: 30px;
+  padding: 1px;
+  background-color: white;
+  color: #747474;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.fieldDropdown-layout.require {
+  border: 1px solid rgb(250, 151, 151);
+}
+
+.product-dialog-form-type-layout::placeholder {
+  font-size: 14px;
+  color: #bdbdbd;
+}
+
+.product-dialog-form-type-layout:focus {
+  font-size: 14px;
+  border: 2px solid rgb(90, 153, 255);
+}
+
+.fieldDropdown-icon {
+  width: 15px;
+  height: 15px;
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.fieldDropdown-form-text {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+  font-size: 14px;
+  color: #bdbdbd;
+}
+
+.fieldDropdown-form-text.data {
+  color: #747474;
+}
+
+.fieldDropdown-dropdown {
+  position: absolute;
+  top: 84px;
+  left: 0px;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+  width: 100%;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border: 1px solid rgb(174, 174, 174);
+  z-index: 1;
+}
+
+.fieldDropdown-dropdown.type {
+  top: 83px;
+}
+
+.fieldDropdown-dropdown.owner {
+  top: 83px;
+}
+
+.fieldDropdown-dropdown.status {
+  top: 68px;
+}
+
+.fieldDropdown-dropdown-list {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 30px;
+  padding-left: 10px;
+}
+
+.fieldDropdown-dropdown-list:hover {
+  background-color: #eeeeee;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}

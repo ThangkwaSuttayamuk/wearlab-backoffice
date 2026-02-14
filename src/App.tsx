@@ -1,25 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import axios from "axios";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { API_PATH } from "./constant/api/apiPath";
+import HomePage from "./view/pages/home/homePage";
+import ShopManagement from "./view/pages/shopManagement/shopManagerment";
+// import MyProfileScreen from "./presentation/screen/my_profile/my_profile_screen";
+// import HomeScreen from "./presentation/screen/home/home_screen";
+// import AddressScreen from "./presentation/screen/address/address_screen";
 
 function App() {
+  function ProtectedRoute({ children }: { children: React.ReactNode }) {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      return <Navigate to="/" replace />;
+    }
+
+    return <>{children}</>;
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/shop-management" element={<ShopManagement/>}/>
+        {/* <Route path="/my-profile" element={<ProtectedRoute><MyProfileScreen /></ProtectedRoute>} />
+        <Route path="/address" element={<ProtectedRoute><AddressScreen /></ProtectedRoute>} /> */}
+      </Routes>
+    </BrowserRouter>
   );
 }
 

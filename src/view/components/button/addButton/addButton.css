@@ -1,0 +1,59 @@
+.addButton-layout {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  height: 36px;
+  padding-left: 15px;
+  padding-right: 15px;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(90, 153, 255);
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  cursor: pointer;
+}
+
+.addButton-text {
+  color: white;
+  font-size: 14px;
+}
+
+.addButton-layout:hover {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  height: 36px;
+  padding-left: 15px;
+  padding-right: 15px;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(12, 101, 245);
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  cursor: pointer;
+}
+
+.addButton-icon {
+  display: none;
+}
+
+@media (max-width: 397px) {
+  .addButton-text {
+    display: none;
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+  .addButton-layout {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  .addButton-icon {
+    display: flex;
+    color: white;
+    font-size: 18px;
+  }
+}

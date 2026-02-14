@@ -1,0 +1,14 @@
+.initial-circle-layout {
+  display: flex;
+  height: 40px;
+  width: 40px;
+  border-radius: 20px;
+  background-color: gray;
+  align-items: center;
+  justify-content: center;
+}
+
+.initial-text {
+  color: white;
+  font-size: 18px;
+}

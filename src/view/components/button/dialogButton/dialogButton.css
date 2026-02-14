@@ -1,0 +1,107 @@
+.dialogButton-layout {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: 30px;
+  width: 130px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  cursor: pointer;
+  gap: 5px;
+}
+
+.dialogButton-layout.Cancel {
+  background-color: #eeeeee;
+}
+
+.dialogButton-layout.Cancel:hover {
+  background-color: #d6d6d6;
+}
+
+
+.dialogButton-layout.Close {
+  width: 100px;
+  background-color: #eeeeee;
+}
+
+.dialogButton-layout.Close:hover {
+  background-color: #d6d6d6;
+}
+
+.dialogButton-layout.Clear {
+  width: 100px;
+  background-color: #eeeeee;
+}
+
+.dialogButton-layout.Clear:hover {
+  background-color: #d6d6d6;
+}
+
+.dialogButton-layout.Create {
+  background-color: rgb(90, 153, 255);
+}
+
+.dialogButton-layout.Create:hover {
+  background-color: rgb(70, 122, 205);
+}
+
+.dialogButton-layout.Confirm {
+  width: 100px;
+  background-color: rgb(90, 153, 255);
+}
+
+.dialogButton-layout.Confirm:hover {
+  background-color: rgb(70, 122, 205);
+}
+
+.dialogButton-layout.Save {
+  background-color: rgb(90, 153, 255);
+}
+
+.dialogButton-layout.Save:hover {
+  background-color: rgb(70, 122, 205);
+}
+
+.dialogButton-layout.Apply {
+  width: 100px;
+  background-color: rgb(90, 153, 255);
+}
+
+.dialogButton-layout.ApplySave:hover {
+  background-color: rgb(70, 122, 205);
+}
+
+.dialogButton-text {
+  font-size: 14px;
+}
+
+.dialogButton-text.Cancel {
+  color: #727272;
+}
+
+.dialogButton-text.Close {
+  color: #727272;
+}
+
+.dialogButton-text.Clear {
+  color: #727272;
+}
+
+.dialogButton-text.Create {
+  color: #ffffff;
+}
+
+.dialogButton-text.Confirm {
+  color: #ffffff;
+}
+
+.dialogButton-text.Save {
+  color: #ffffff;
+}
+
+.dialogButton-text.Apply {
+  color: #ffffff;
+}

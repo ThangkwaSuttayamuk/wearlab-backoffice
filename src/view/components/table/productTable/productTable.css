@@ -1,0 +1,155 @@
+.productTable-group-layout {
+  display: flex;
+  flex-direction: column;
+}
+
+.productTable-layout {
+  background-color: #f1f1f1;
+  overflow-y: scroll;
+  overflow-x: scroll;
+  text-align: justify;
+  display: flex;
+  flex-direction: row;
+  width: calc(100vw - 290px);
+  height: calc(100vh - 260px);
+}
+
+.productTable-layout.false {
+  width: calc(100vw - 120px);
+}
+
+@media (max-width: 650px) {
+  .productTable-layout.true {
+    width: calc(100vw - 50px);
+  }
+  .productTable-layout.false {
+    width: calc(100vw - 50px);
+  }
+}
+
+.productTable-detail-layout {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 30px;
+  align-items: center;
+}
+
+.productTable-column-layout {
+  display: flex;
+  flex-direction: column;
+  min-width: 100px;
+}
+
+.productTable-column-layout.id {
+  width: 100px;
+  min-width: 120px;
+}
+
+.productTable-column-layout.name {
+  width: 250px;
+  min-width: 200px;
+}
+
+.productTable-column-layout.type {
+  width: 130px;
+  min-width: 100px;
+}
+
+.productTable-column-layout.status {
+  width: 150px;
+  min-width: 150px;
+}
+
+.productTable-column-layout.price {
+  width: 100px;
+  min-width: 100px;
+}
+
+.productTable-column-layout.salePrice {
+  width: 100px;
+  min-width: 100px;
+}
+
+.productTable-column-layout.owner {
+  width: 150px;
+  min-width: 100px;
+}
+
+.productTable-column-layout.updateDate {
+  width: 150px;
+  min-width: 150px;
+}
+
+.productTable-column-layout.createDate {
+  width: 150px;
+  min-width: 150px;
+}
+
+.productTable-column-layout.action {
+  width: 90px;
+  min-width: 70px;
+}
+
+.productTable-row-layout {
+  display: flex;
+  flex-direction: row;
+  height: 40px;
+  min-height: 40px;
+  width: 100%;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 5px;
+  border-top: 1px solid rgb(210, 227, 255);
+  background-color: white; /* to make it nice when sticky */
+  /* z-index: 1; */
+}
+
+.productTable-row-layout.head {
+  position: sticky; /* <--- make the header sticky */
+  height: 30px;
+  top: 0; /* <--- stick it to the top */
+  background-color: rgb(220, 233, 255); /* header background */
+  /* z-index: 2; */
+}
+
+.productTable-text {
+  font-size: 14px;
+  color: rgb(142, 142, 142);
+}
+
+.productTable-text.head {
+  color: rgb(171, 171, 171);
+}
+
+.productTable-text.outOfStock {
+  color: rgb(255, 121, 121);
+}
+
+.productTable-text.available {
+  color: rgb(67, 185, 71);
+}
+
+.productTable-icon-layout {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.productTable-icon {
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+}
+
+.productTable-action-layout {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+}
+
+.productTable-action-icon {
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+}

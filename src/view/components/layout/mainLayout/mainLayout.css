@@ -1,0 +1,15 @@
+.mainLayout-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  background-color: aliceblue;
+}
+
+.mainLayout-body-layout {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  width: 100%;
+}
+
