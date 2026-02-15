@@ -7,7 +7,7 @@ const useNavbarStore = create<{
   setIsShowNavbar: () => void;
 }>((set, get) => ({
   isShowNavbar: false,
-  activeButton: 0,
+  activeButton: 1,
   setActiveButton: payload => {
     set({ activeButton: payload });
   },

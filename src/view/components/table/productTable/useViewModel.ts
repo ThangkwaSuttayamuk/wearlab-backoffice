@@ -1,32 +1,29 @@
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useMemo } from "react";
+import { SellProductService } from "../../../../service/product/sellProductService";
 import useDialogStore from "../../../../stores/dialog/useDialogStore";
-import useProductStore from "../../../../stores/product/useProductStore";
-import useSelectProductStore from "../../../../stores/product/useSelectProductStore";
-import useTableStore from "../../../../stores/table/useTableStore";
 import useFilterDialogStore from "../../../../stores/dialog/useFilterDialogStore";
-import useSearchStore from "../../../../stores/search/useSearchStore";
-import { DeleteProductService } from "../../../../service/product/deleteProductService";
+import usePopUpStore from "../../../../stores/dialog/usePopUpStore";
 import useNavbarStore from "../../../../stores/navbar/useNavbarStore";
+import useProductStore from "../../../../stores/product/useProductStore";
+import useSearchStore from "../../../../stores/search/useSearchStore";
+import useTableStore from "../../../../stores/table/useTableStore";
 
 const useViewModel = () => {
   const tableHead = [
     "action",
     "id",
     "name",
+    "sku",
     "type",
-    "status",
     "price",
-    "salePrice",
-    "owner",
+    "stock",
     "createDate",
-    "updateDate",
   ];
-  const {isShowNavbar} = useNavbarStore();
-  const { input, setInput, getInput } = useSearchStore();
-  const { allProduct, total, getAllProduct, getProductWithFilter } =
+  const { isShowNavbar } = useNavbarStore();
+  const { input } = useSearchStore();
+  const { allProduct, total, totalValue, getAllProduct, getProductWithFilter } =
     useProductStore();
-  const { setTypeDialog } = useDialogStore();
-  const { setId, getProductById } = useSelectProductStore();
+  const { typeDialog, setTypeDialog } = useDialogStore();
   const {
     page,
     allPage,
@@ -39,7 +36,16 @@ const useViewModel = () => {
     setEndItem,
     setAllItem,
   } = useTableStore();
-  const { applyStatus, applyType } = useFilterDialogStore();
+  const { applyType } = useFilterDialogStore();
+  const { setTitle, setMessage, setIsOpen } = usePopUpStore();
+
+  const onShowFilter = useMemo(() => {
+    if (typeDialog === "Filter Product") {
+      return "filter";
+    } else {
+      return "";
+    }
+  }, [typeDialog]);
 
   const formatDate = (original: string) => {
     const date = new Date(original);
@@ -90,33 +96,34 @@ const useViewModel = () => {
   };
 
   const onGetAllProduct = useCallback(() => {
-    const limit = 15;
-    const offset = startItem;
-
-    if (applyStatus || applyType || input) {
-      getProductWithFilter(limit, offset, applyStatus, applyType, input);
+    if (applyType || input) {
+      getProductWithFilter(applyType, input);
     } else {
-      getAllProduct(limit, offset);
+      getAllProduct();
     }
-  }, [
-    startItem,
-    applyStatus,
-    applyType,
-    input,
-    getProductWithFilter,
-    getAllProduct,
-  ]);
+  }, [applyType, input, getProductWithFilter, getAllProduct]);
 
-  const onDeleteProduct = async (id: number) => {
-    const service = new DeleteProductService();
+  const onSellProduct = async (id: number, stock: number) => {
+    if (stock <= 0) {
+      return;
+    }
+
+    const service = new SellProductService();
     try {
-      const result = await service.deleteProduct({ id: id });
+      const result = await service.sellProduct({
+        productID: id,
+        quantity: 1,
+      });
       if (result?.status === 200) {
-        setTypeDialog("");
-        getAllProduct(endItem, startItem);
+        getAllProduct();
+        setIsOpen(true);
+        setTitle("Success");
+        setMessage("Product sold successfully.");
       }
-    } catch (err) {
-      console.error(err);
+    } catch (err: any) {
+      setIsOpen(true);
+      setTitle("Error");
+      setMessage(err.error);
     }
   };
 
@@ -124,14 +131,13 @@ const useViewModel = () => {
     onGetAllProduct();
     const totalPages = Math.ceil(total / 15);
     setAllPage(totalPages);
-  }, [onGetAllProduct, setAllPage, total]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [input, applyType]);
 
   return {
     tableHead,
     allProduct,
     setTypeDialog,
-    setId,
-    getProductById,
     formatDate,
     page,
     allPage,
@@ -143,13 +149,15 @@ const useViewModel = () => {
     setStartItem,
     setEndItem,
     setAllItem,
-    onDeleteProduct,
+    onSellProduct,
     onCheckPrevious,
     onCheckNext,
     onPrevious,
     onNext,
     total,
-    isShowNavbar
+    isShowNavbar,
+    onShowFilter,
+    totalValue
   };
 };
 

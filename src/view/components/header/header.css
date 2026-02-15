@@ -1,7 +1,7 @@
 .header-layout {
   display: flex;
   flex-direction: row;
-  height: 70px;
+  min-height: 70px;
   justify-content: space-between;
   background-color: white;
   padding-left: 20px;

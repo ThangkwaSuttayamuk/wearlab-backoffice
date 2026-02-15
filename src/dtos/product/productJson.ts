@@ -2,6 +2,7 @@ export interface ProductJson {
   id: number;
   name: string;
   description: string;
+  sku: string;
   defect: string;
   type: string;
   waist: number;
@@ -12,7 +13,8 @@ export interface ProductJson {
   price: number;
   saleprice: number;
   image: string[];
-  createdate: string;
-  updatedate: string;
+  stock: number;
+  createdAt: string;
+  updatedAt: string;
   ownername: string;
 }

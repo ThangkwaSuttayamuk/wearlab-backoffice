@@ -3,7 +3,6 @@
   flex-direction: column;
   margin-top: 15px;
   width: calc(100vw - 270px);
-  height: 100%;
   background-color: white;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
@@ -38,4 +37,11 @@
 .bodyLayout-header-text {
   font-size: 22px;
   color: #7d7d7d;
+}
+
+.bodyLayout-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 }

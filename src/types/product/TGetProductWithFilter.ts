@@ -1,14 +1,12 @@
 import { ProductEntity } from "../../entity/product/productEntity";
 
 export type TGetProductWithFilterPayload = {
-  status: string;
-  type: string;
-  limit: number;
-  offset: number;
-  name: string;
+  category: string;
+  keyword: string;
 };
 
 export type TGetProductWithFilterResponse = {
   products: ProductEntity[];
   total: number;
+  totalValue?: number;
 };

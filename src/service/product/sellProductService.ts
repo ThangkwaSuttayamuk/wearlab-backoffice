@@ -1,23 +1,23 @@
 import axios from "axios";
 import { API_PATH } from "../../constant/api/apiPath";
-import { TCreateProductPayload } from "../../types/product/TCreateProduct";
+import { TSellProductPayload } from "../../types/product/TSellProduct";
 
-export class CreateProductService {
+export class SellProductService {
 
-  createProduct = async (payload: TCreateProductPayload) => {
+  sellProduct = async (payload: TSellProductPayload) => {
     try {
       const response = await axios.post(
-        API_PATH.PRODUCT.CREATE_NEW_PRODUCT,
+        API_PATH.PRODUCT.SELL_PRODUCT,
         payload,
       );
 
       if (!response.data) {
-        throw new Error("Error reate Product");
+        throw new Error("Error selling Product");
       }
 
       return response;
     } catch (error: unknown) {
-      console.error("Create Product API Error:", error);
+      console.error("Sell Product API Error:", error);
       if (axios.isAxiosError(error)) {
         throw error.response?.data;
       } else {

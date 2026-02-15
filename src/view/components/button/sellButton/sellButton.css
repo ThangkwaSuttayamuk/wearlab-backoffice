@@ -1,0 +1,38 @@
+.sellButton-layout {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  height: 25px;
+  padding-left: 15px;
+  padding-right: 15px;
+  align-items: center;
+  justify-content: center;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  cursor: pointer;
+}
+
+.sellButton-layout.outOfStock {
+  background-color: rgb(200, 200, 200);
+  cursor: not-allowed;
+}
+
+.sellButton-layout.available {
+  background-color: rgb(255, 90, 90);
+}
+
+.sellButton-text {
+  color: white;
+  font-size: 14px;
+}
+
+.sellButton-layout:hover {
+  background-color: rgb(255, 0, 0);
+}
+
+.sellButton-layout.outOfStock:hover {
+  background-color: rgb(200, 200, 200);
+  cursor: not-allowed;
+}

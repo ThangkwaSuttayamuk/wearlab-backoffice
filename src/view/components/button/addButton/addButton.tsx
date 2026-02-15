@@ -1,5 +1,5 @@
-import useViewModel from "../useViewModel";
 import "./addButton.css";
+import useViewModel from "./useViewModel";
 
 type AddButtonProps = {
   title: string;

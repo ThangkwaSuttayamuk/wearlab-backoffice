@@ -6,7 +6,7 @@ export class ProductModel extends ProductEntity {
     return new ProductModel(
       json?.id,
       json?.name,
-      json?.description,
+      json?.sku,
       json?.defect,
       json?.type,
       json?.waist,
@@ -17,8 +17,9 @@ export class ProductModel extends ProductEntity {
       json?.price,
       json?.saleprice,
       json?.image,
-      json?.createdate,
-      json?.updatedate,
+      json?.stock,
+      json?.createdAt,
+      json?.updatedAt,
       json?.ownername
     );
   }
@@ -27,7 +28,7 @@ export class ProductModel extends ProductEntity {
     return new ProductEntity(
       this.id,
       this.name,
-      this.description,
+      this.sku,
       this.defect,
       this.type,
       this.waist,
@@ -38,8 +39,9 @@ export class ProductModel extends ProductEntity {
       this.price,
       this.saleprice,
       this.image,
-      this.createdate,
-      this.updatedate,
+      this.stock,
+      this.createdAt,
+      this.updatedAt,
       this.ownername
     );
   }

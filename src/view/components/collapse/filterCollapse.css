@@ -1,0 +1,62 @@
+.filter-collpase-layout {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border: 1px solid #d2d2d2;
+  padding: 15px;
+  margin-inline: 12px;
+  margin-bottom: 15px;
+}
+
+.filter-collpase-row-layout {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  border: 1px solid #d2d2d2;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  margin-top: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 5px;
+  padding-right: 20px;
+  gap: 10px;
+}
+
+.filter-collpase-checkbox {
+  margin-left: 20%;
+  width: 15px;
+  height: 15px;
+  min-width: 15px;
+  min-height: 15px;
+  border: 2px solid #656565;
+  position: relative;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.filter-collpase-checkbox-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding-right: 20px;
+}
+
+.filter-collpase-text {
+  font-size: 14px;
+  color: #676767;
+}
+
+.filter-collpase-text.head {
+  font-size: 18px;
+  color: #676767;
+  margin-bottom: 10px;
+}

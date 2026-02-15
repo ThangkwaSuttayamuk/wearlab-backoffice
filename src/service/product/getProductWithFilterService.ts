@@ -12,17 +12,25 @@ export class GetProductWithFilterService {
     payload: TGetProductWithFilterPayload
   ): Promise<TGetProductWithFilterResponse> {
     try {
-      const response = await axios.get(
-        API_PATH.PRODUCT.GET_PRODUCT_WITH_FILTER +
-          `limit=${payload.limit}&offset=${payload.offset}&status=${payload.status}&type=${payload.type}&name=${payload.name}`
-      );
-      console.log(
-        API_PATH.PRODUCT.GET_PRODUCT_WITH_FILTER +
-          `limit=${payload.limit}&offset=${payload.offset}&status=${payload.status}&type=${payload.type}&name=${payload.name}`
-      );
+      const params = new URLSearchParams();
+      
+      if (payload.category) {
+        params.append('category', payload.category);
+      }
+      
+      if (payload.keyword) {
+        params.append('keyword', payload.keyword);
+      }
+      
+      const queryString = params.toString();
+      const url = queryString 
+        ? `${API_PATH.PRODUCT.GET_PRODUCT_WITH_FILTER}${queryString}`
+        : API_PATH.PRODUCT.GET_PRODUCT_WITH_FILTER.slice(0, -1);
+      
+      const response = await axios.get(url);
 
-      const { products, total } = response.data;
-      console.log(products, total);
+      const { products, total, totalValue } = response.data;
+
       if (!response.data) {
         throw new Error("No data received");
       }
@@ -34,6 +42,7 @@ export class GetProductWithFilterService {
                 ProductModel.fromJson(item).toEntity()
               ),
         total: total,
+        totalValue: totalValue,
       };
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {

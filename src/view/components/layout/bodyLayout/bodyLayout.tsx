@@ -1,4 +1,6 @@
+import useDialogStore from "../../../../stores/dialog/useDialogStore";
 import useNavbarStore from "../../../../stores/navbar/useNavbarStore";
+import FilterCollapse from "../../collapse/filterCollapse";
 import "./bodyLayout.css";
 
 type BodyLayoutProps = {
@@ -12,7 +14,8 @@ const BodyLayout: React.FC<BodyLayoutProps> = ({
   header,
   filter,
 }) => {
-  const {isShowNavbar} = useNavbarStore();
+  const { isShowNavbar } = useNavbarStore();
+  const { typeDialog } = useDialogStore();
 
   return (
     <div className={`bodyLayout-layout ${isShowNavbar}`}>
@@ -20,14 +23,8 @@ const BodyLayout: React.FC<BodyLayoutProps> = ({
         <text className="bodyLayout-header-text">{header}</text>
         {filter}
       </div>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
+      {typeDialog === "Filter Product" && <FilterCollapse />}
+      <div className="bodyLayout-content">
         {children}
       </div>
     </div>

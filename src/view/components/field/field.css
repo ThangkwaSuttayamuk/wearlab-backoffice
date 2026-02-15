@@ -1,12 +1,19 @@
 .field-group-layout {
   display: flex;
   flex-direction: column;
+  flex: 1;
+  width: 100%;
   gap: 5px;
 }
 
 .field-text {
   font-size: 14px;
   color: #727272;
+}
+
+.field-error-text {
+  font-size: 12px;
+  color: rgb(250, 151, 151);
 }
 
 .field-form-layout {
@@ -23,121 +30,9 @@
   border-bottom-right-radius: 5px;
 }
 
-.field-form-layout.id {
-  border: 1px solid rgb(174, 174, 174);
-  outline: none;
-  padding-left: 10px;
-  font-size: 14px;
-  height: 30px;
-  background-color: white;
-  color: #747474;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
-}
-
-.field-form-layout.name {
-  width: 300px;
-}
-
-.field-form-layout.name.require {
+.field-form-layout.require {
   border: 1px solid rgb(250, 151, 151);
 }
-
-.field-form-layout.description {
-  width: 690px;
-  height: 60px;
-}
-
-.field-form-layout.description.require {
-  border: 1px solid rgb(250, 151, 151);
-}
-
-.field-form-layout.defect {
-  width: 690px;
-  height: 60px;
-}
-
-.field-form-layout.defect.require {
-  border: 1px solid rgb(250, 151, 151);
-}
-
-.field-form-layout.type {
-  display: flex;
-  flex-direction: row;
-  width: 150px;
-  height: 30px;
-  align-items: center;
-}
-
-.field-form-layout.type.require {
-  border: 1px solid rgb(250, 151, 151);
-}
-
-.field-form-layout.waist {
-  display: flex;
-  flex-direction: row;
-  width: 150px;
-  height: 30px;
-  align-items: center;
-}
-
-.field-form-layout.waist.require {
-  border: 1px solid rgb(250, 151, 151);
-}
-
-.field-form-layout.length {
-  display: flex;
-  flex-direction: row;
-  width: 150px;
-  height: 30px;
-  align-items: center;
-}
-
-.field-form-layout.length.require {
-  border: 1px solid rgb(250, 151, 151);
-}
-
-.field-form-layout.chest {
-  display: flex;
-  flex-direction: row;
-  width: 150px;
-  height: 30px;
-  align-items: center;
-}
-
-.field-form-layout.chest.require {
-  border: 1px solid rgb(250, 151, 151);
-}
-
-.field-form-layout.detail {
-  display: flex;
-  flex-direction: row;
-  width: 100px;
-  height: 30px;
-  align-items: center;
-}
-
-.field-form-layout.detail.require {
-  border: 1px solid rgb(250, 151, 151);
-}
-
-.field-form-layout.price {
-  width: 150px;
-}
-
-.field-form-layout.price.require {
-  border: 1px solid rgb(250, 151, 151);
-}
-
-.field-form-layout.salePrice {
-  width: 150px;
-}
-/* 
-.field-form-layout.salePrice.require {
-  border: 1px solid rgb(250, 151, 151);
-} */
 
 .field-form-layout:disabled {
   background-color: #eeeeee;

@@ -1,99 +1,62 @@
-import { ChangeEvent, useEffect, useState } from "react";
-import { OwnerEntity } from "../../../../../entity/owner/ownerEntity";
+import { useEffect, useState } from "react";
+import * as yup from "yup";
 import { CreateProductService } from "../../../../../service/product/createProductService";
 import useDialogStore from "../../../../../stores/dialog/useDialogStore";
 import useProductFieldStore from "../../../../../stores/fieldDropdown/useFieldDropdown";
 import useProductFormStore from "../../../../../stores/form/productForm/useProductFormStore";
-import useImageStore from "../../../../../stores/image/useImageStore";
-import useOwnerStore from "../../../../../stores/owner/useOwnerStore";
 import useProductStore from "../../../../../stores/product/useProductStore";
-import useTableStore from "../../../../../stores/table/useTableStore";
+import useTypeStore from "../../../../../stores/type/useTypeStore";
+
+const productSchema = yup.object().shape({
+  productName: yup.string().required("Product Name is required"),
+
+  smeCode: yup
+    .string()
+    .matches(/^[A-Z0-9]+$/, "SME Code must contain only A-Z and 0-9")
+    .min(3, "SME Code must be at least 3 characters")
+    .required("SME Code is required"),
+
+  productType: yup.string().required("Product Type is required"),
+
+  productPrice: yup
+    .number()
+    .typeError("Price must be a number")
+    .positive("Price must be positive")
+    .required("Price is required"),
+
+  stock: yup
+    .number()
+    .typeError("Stock must be a number")
+    .moreThan(0, "Stock must be more than 0")
+    .required("Stock is required"),
+});
 
 const useViewModel = () => {
   const {
     productId,
     productName,
-    productDescription,
-    productDefect,
     productType,
-    productWaist,
-    productLength,
-    productChest,
-    productOwner,
-    productStatus,
     productPrice,
-    productSalePrice,
-    productImage,
-    productOwnerName,
+    stock,
+    smeCode,
     setProductId,
     setProductName,
-    setProductDescription,
-    setProductDefect,
     setProductType,
-    setProductWaist,
-    setProductLength,
-    setProductChest,
-    setProductOwner,
-    setProductStatus,
     setProductPrice,
-    setProductSalePrice,
-    setProductImage,
-    setProductOwnerName,
     setProductInit,
+    setSmeCode,
+    setStock,
   } = useProductFormStore();
 
   const [openProductType, setOpenProductType] = useState(false);
-  const [openProductOwner, setOpenProductOwner] = useState(false);
-  const [openProductStatus, setOpenProductStatus] = useState(false);
-  const { allOwner, getAllOwner } = useOwnerStore();
   const { fullField, setFullField } = useProductFieldStore();
   const { setTypeDialog } = useDialogStore();
-  const { startItem, endItem } = useTableStore();
   const { getAllProduct } = useProductStore();
+  const { allTypeWithoutAll, getAllType } = useTypeStore();
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
-  const [uploading, setUploading] = useState<boolean>(false);
-
-  const { fileURLs, onHandleFileChange, onHandleDelete, setFileURLs } =
-    useImageStore();
-    
-  const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
-    onHandleFileChange(event, setProductImage);
-  };
-
-  const handleDelete = async (filePath: string) => {
-    onHandleDelete(filePath, setProductImage);
-  };
-
-  const extractFilePath = (publicUrl: string): string => {
-    const parts = publicUrl.split("/");
-    return parts.slice(parts.indexOf("product") + 1).join("/");
-  };
-
-  const setOwner = (owner: OwnerEntity) => {
-    setProductOwner(owner.id);
-    setProductOwnerName(owner.name);
-  };
-
-  const setOpenDropdown = (type: string) => {
-    switch (type) {
-      case "type":
-        setOpenProductType(!openProductType);
-        setOpenProductStatus(false);
-        setOpenProductOwner(false);
-        break;
-      case "status":
-        setOpenProductType(false);
-        setOpenProductStatus(!openProductStatus);
-        setOpenProductOwner(false);
-        break;
-      case "owner":
-        setOpenProductType(false);
-        setOpenProductStatus(false);
-        setOpenProductOwner(!openProductOwner);
-        break;
-      default:
-        break;
-    }
+  const setOpenDropdown = () => {
+    setOpenProductType(!openProductType);
   };
 
   const createNewProduct = async () => {
@@ -102,27 +65,15 @@ const useViewModel = () => {
 
       const result = await service.createProduct({
         name: productName,
-        description: productDescription,
-        defect: productDefect,
+        sku: smeCode,
         type: productType,
-        waist:
-          productType === "Top" || productType === "Accessory"
-            ? 0
-            : productWaist,
-        length: productType === "Accessory" ? 0 : productLength,
-        chest:
-          productType === "Bottom" || productType === "Accessory"
-            ? 0
-            : productChest,
-        owner: productOwner,
-        status: productStatus,
         price: productPrice,
-        saleprice: productSalePrice,
-        image: productImage,
+        stock: stock,
       });
+
       return result;
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      onErrorService(error);
     }
   };
 
@@ -130,113 +81,75 @@ const useViewModel = () => {
     setProductInit();
     setTypeDialog("");
     setFullField(true);
-    setFileURLs([]);
   };
 
   const onCreate = async () => {
-    const isFull = setFull(); // Synchronously checks fields
-    console.log(isFull)
+    try {
+      await productSchema.validate(
+        {
+          productName,
+          smeCode,
+          productType,
+          productPrice,
+          stock,
+        },
+        { abortEarly: false },
+      );
 
-    if (isFull) {
+      setErrors({});
+
       const result = await createNewProduct();
-      console.log(result?.status)
 
       if (result?.status === 200) {
         setTypeDialog("");
-        getAllProduct(endItem, startItem);
+        getAllProduct();
         setProductInit();
-        setFileURLs([]);
       }
+    } catch (err: any) {
+      const newErrors: Record<string, string> = {};
+
+      err.inner.forEach((e: any) => {
+        newErrors[e.path] = e.message;
+      });
+
+      setErrors(newErrors);
     }
   };
 
-  const setFull = () => {
-    const requiredFields = [
-      productName,
-      productDescription,
-      productDefect,
-      productType,
-      productOwner,
-      productStatus,
-      productPrice,
-      productImage,
-    ];
-
-    if (productType === "Top") {
-      requiredFields.push(productLength, productChest);
-    } else if (productType === "Bottom") {
-      requiredFields.push(productLength, productWaist);
+  const onErrorService = (error: any) => {
+    if (error === "SKU Code already exists") {
+      const newErrors: Record<string, string> = {};
+      newErrors["smeCode"] = error;
+      setErrors(newErrors);
+      return;
     }
-
-    const isFull = requiredFields.every((field) => {
-      if (typeof field === "string") return field.trim() !== "";
-      if (typeof field === "number") return field !== 0;
-      if (Array.isArray(field))
-        return field.length > 0 && field.every((f) => f.trim() !== "");
-      return Boolean(field);
-    });
-
-    setFullField(isFull);
-    return isFull;
-  };
-
-  const onSetProductType = (type: string) => {
-    setProductWaist(0);
-    setProductLength(0);
-    setProductChest(0);
-    setProductType(type);
   };
 
   useEffect(() => {
-    getAllOwner();
-  }, [getAllOwner]);
+    getAllType();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return {
     productId,
     productName,
-    productDescription,
-    productDefect,
+    smeCode,
     productType,
-    productWaist,
-    productLength,
-    productChest,
-    productOwner,
-    productStatus,
     productPrice,
-    productSalePrice,
-    productImage,
-    productOwnerName,
+    stock,
     setProductId,
     setProductName,
-    setProductDescription,
-    setProductDefect,
     setProductType,
-    setProductWaist,
-    setProductLength,
-    setProductChest,
-    setProductOwner,
-    setProductStatus,
     setProductPrice,
-    setProductSalePrice,
-    setProductImage,
     setOpenDropdown,
-    onSetProductType,
+    setSmeCode,
+    setStock,
     openProductType,
-    openProductOwner,
-    openProductStatus,
-    setProductOwnerName,
-    setProductInit,
-    setOwner,
-    createNewProduct,
-    allOwner,
+    fullField,
+    errors,
     onCancel,
     onCreate,
-    fullField,
-    uploading,
-    fileURLs,
-    handleFileChange,
-    handleDelete,
-    extractFilePath,
+    allTypeWithoutAll,
   };
 };
 

@@ -2,59 +2,64 @@ import { create } from "zustand";
 import { ProductEntity } from "../../entity/product/productEntity";
 import { GetAllProductService } from "../../service/product/getAllProductService";
 import { GetProductWithFilterService } from "../../service/product/getProductWithFilterService";
+import useLoadingStore from "../loading/useLoadingStore";
 
 const useProductStore = create<{
   allProduct: ProductEntity[];
   total: number;
+  totalValue: number;
   setAllProduct: (allProduct: any) => void;
-  getAllProduct: (limit: number, offset: number) => void;
+  getAllProduct: () => void;
   getProductWithFilter: (
-    limit: number,
-    offset: number,
-    status: string,
-    type: string,
-    name: string
+    category: string,
+    keyword: string
   ) => void;
 }>((set) => ({
   allProduct: [],
   total: 0,
+  totalValue: 0,
   setAllProduct: (payload) => {
     set({ allProduct: payload });
   },
-  getAllProduct: async (limit, offset) => {
+  getAllProduct: async () => {
+    const { setIsLoading } = useLoadingStore.getState();
     const service = new GetAllProductService();
     try {
-      const result = await service.getAllProduct({
-        limit: limit,
-        offset: offset,
-      });
+      setIsLoading(true);
+      const result = await service.getAllProduct({});
+
       set((state) => ({
         ...state,
         allProduct: result.products,
         total: result.total,
+        totalValue: result.totalValue || 0,
       }));
     } catch (err) {
       console.error(err);
+    } finally {
+      setIsLoading(false);
     }
   },
-  getProductWithFilter: async (limit, offset, status, type, name) => {
+  getProductWithFilter: async (category, keyword) => {
+    const { setIsLoading } = useLoadingStore.getState();
     const service = new GetProductWithFilterService();
     try {
+      setIsLoading(true);
       const result = await service.getProductWithFilter({
-        limit: limit,
-        offset: offset,
-        status: status,
-        type: type,
-        name: name,
+        category: category==="All" ? "" : category,
+        keyword: keyword,
       });
 
       set((state) => ({
         ...state,
         allProduct: result.products,
         total: result.total,
+        totalValue: result.totalValue || 0,
       }));
     } catch (err) {
       console.error(err);
+    } finally {
+      setIsLoading(false);
     }
   },
 }));

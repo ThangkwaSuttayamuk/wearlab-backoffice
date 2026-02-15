@@ -6,10 +6,10 @@ import useTableStore from "../../../stores/table/useTableStore";
 
 const useViewModel = () => {
   const { input, setInput, getInput } = useSearchStore();
-  const { selectStatus, selectType } = useFilterDialogStore();
+  const {  selectType } = useFilterDialogStore();
   const { getProductWithFilter, total, } =
     useProductStore();
-  const {  startItem, setItemInit, setAllPage } = useTableStore();
+  const { setItemInit, setAllPage } = useTableStore();
 
   const setNewInput = (value: string) => {
     const newInput = value.trim();
@@ -21,13 +21,11 @@ const useViewModel = () => {
     if (e.key === "Enter") {
       setInput(input);
       onApplySearch();
-      console.log();
     }
   };
 
   const onApplySearch = () => {
-    console.log(input);
-    getProductWithFilter(15, startItem, selectStatus, selectType, input);
+    getProductWithFilter(selectType, input);
     const totalPages = Math.ceil(total / 15);
     setItemInit();
     setAllPage(totalPages);

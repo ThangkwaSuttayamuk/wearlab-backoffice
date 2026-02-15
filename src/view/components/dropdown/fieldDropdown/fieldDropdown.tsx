@@ -1,4 +1,3 @@
-import { OwnerEntity } from "../../../../entity/owner/ownerEntity";
 import ArrowDown from "./../../../../assets/images/arrowDown.png";
 import "./fieldDropdown.css";
 
@@ -6,15 +5,14 @@ type FieldDropdownProps = {
   type: string;
   title: string;
   placeHolder: string;
-  listDropdown?: string[];
-  listOwner?: OwnerEntity[];
+  listDropdown: string[];
   action: () => void;
   isOpen: boolean;
   setData?: (data: string) => void;
-  setOwner?: (data: OwnerEntity) => void;
   selectdData: string;
   fullField: boolean;
   checkRequire?: boolean;
+  errors?: string;
 };
 
 const FieldDropdown: React.FC<FieldDropdownProps> = ({
@@ -22,14 +20,13 @@ const FieldDropdown: React.FC<FieldDropdownProps> = ({
   title,
   placeHolder,
   listDropdown,
-  listOwner,
   action,
   isOpen,
   setData,
-  setOwner,
   selectdData,
   fullField,
   checkRequire,
+  errors,
 }) => {
   return (
     <div className="fieldDropdown-group-layout">
@@ -57,33 +54,22 @@ const FieldDropdown: React.FC<FieldDropdownProps> = ({
           </text>
           {isOpen && (
             <div className={`fieldDropdown-dropdown ${type}`}>
-              {type === "owner"
-                ? listOwner?.map((item) => (
-                    <div
-                      className="fieldDropdown-dropdown-list"
-                      onClick={() => {
-                        setOwner?.(item);
-                        action();
-                      }}
-                    >
-                      <span className="product-dialog-text">{item.name}</span>
-                    </div>
-                  ))
-                : listDropdown?.map((item) => (
-                    <div
-                      className="fieldDropdown-dropdown-list"
-                      onClick={() => {
-                        setData?.(item);
-                        action();
-                      }}
-                    >
-                      <span className="product-dialog-text">{item}</span>
-                    </div>
-                  ))}
+              {listDropdown?.map((item) => (
+                <div
+                  className="fieldDropdown-dropdown-list"
+                  onClick={() => {
+                    setData?.(item);
+                    action();
+                  }}
+                >
+                  <span className="product-dialog-text">{item}</span>
+                </div>
+              ))}
             </div>
           )}
         </div>
       </div>
+      {errors && <text className="field-error-text">{errors}</text>}
     </div>
   );
 };

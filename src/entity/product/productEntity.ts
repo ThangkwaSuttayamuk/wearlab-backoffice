@@ -1,7 +1,7 @@
 export class ProductEntity {
   id: number;
   name: string;
-  description: string;
+  sku: string;
   defect: string;
   type: string;
   waist: number;
@@ -12,13 +12,14 @@ export class ProductEntity {
   price: number;
   saleprice: number;
   image: string[];
-  createdate: string;
-  updatedate: string;
+  stock: number;
+  createdAt: string;
+  updatedAt: string;
   ownername: string;
   constructor(
     id: number,
     name: string,
-    description: string,
+    sku: string,
     defect: string,
     type: string,
     waist: number,
@@ -29,13 +30,14 @@ export class ProductEntity {
     price: number,
     saleprice: number,
     image: string[],
-    createdate: string,
-    updatedate: string,
+    stock: number,
+    createdAt: string,
+    updatedAt: string,
     ownername: string
   ) {
     this.id = id;
     this.name = name;
-    this.description = description;
+    this.sku = sku;
     this.defect = defect;
     this.type = type;
     this.waist = waist;
@@ -46,8 +48,9 @@ export class ProductEntity {
     this.price = price;
     this.saleprice = saleprice;
     this.image = image;
-    this.createdate = createdate;
-    this.updatedate = updatedate;
+    this.stock = stock;
+    this.createdAt = createdAt;
+    this.updatedAt = updatedAt;
     this.ownername = ownername;
   }
 }

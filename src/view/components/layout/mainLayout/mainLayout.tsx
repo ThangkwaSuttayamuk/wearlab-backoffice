@@ -1,8 +1,8 @@
 import ProductDialog from "../../dialog/product/createProductDialog/productDialog";
-import DeleteProductDialog from "../../dialog/product/deleteProductDialog/deleteDialog";
-import UpdateProductDialog from "../../dialog/product/updateProductDialog/updateProductDialog";
 import Header from "../../header/header";
+import Loading from "../../loading/loading";
 import Navbar from "../../navbar/navbar";
+import PrimaryPopUp from "../../pop-up/primaryPopUp";
 import "./mainLayout.css";
 import useViewModel from "./useViewModel";
 
@@ -11,7 +11,7 @@ type MainLayoutProps = {
 };
 
 const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
-  const { typeDialog } = useViewModel();
+  const { typeDialog, isOpen, isLoading } = useViewModel();
 
   return (
     <div className="mainLayout-layout">
@@ -20,15 +20,9 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
         <Navbar />
         {children}
       </div>
-      {typeDialog === "New Product" ? (
-        <ProductDialog />
-      ) : typeDialog === "Update Product" ? (
-        <UpdateProductDialog />
-      ) : typeDialog === "Delete Product" ? (
-        <DeleteProductDialog />
-      ) : (
-        <></>
-      )}
+      {typeDialog === "New Product" && <ProductDialog />}
+      {isOpen&& <PrimaryPopUp />}
+      {isLoading && <Loading />}
     </div>
   );
 };
